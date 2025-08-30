@@ -9,12 +9,16 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
+@ToString(exclude = {"driver", "passenger", "review"})
 @NoArgsConstructor
 @AllArgsConstructor
 public class Booking extends BaseModel{
 
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private Review review;
+    @ManyToOne
+    private Driver driver;
+
+    @ManyToOne
+    private Passenger passenger;
 
     @Enumerated(value = EnumType.STRING)
     private BookingStatus bookingStatus;
@@ -27,9 +31,7 @@ public class Booking extends BaseModel{
 
     private Long totalDistance;
 
-    @ManyToOne
-    private Driver driver;
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
+    private Review review;
 
-    @ManyToOne
-    private Passenger passenger;
 }
