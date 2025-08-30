@@ -1,20 +1,15 @@
 package com.example.UberReviewService.services;
 
 import com.example.UberReviewService.models.Booking;
-import com.example.UberReviewService.models.BookingStatus;
 import com.example.UberReviewService.models.Driver;
-import com.example.UberReviewService.models.Review;
 import com.example.UberReviewService.repositories.BookingRepository;
 import com.example.UberReviewService.repositories.DriverRepository;
 import com.example.UberReviewService.repositories.ReviewRepository;
-import com.fasterxml.jackson.annotation.OptBoolean;
 import jakarta.transaction.Transactional;
-import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
 import java.util.*;
 
 @Service
