@@ -2,10 +2,16 @@ package com.example.UberReviewService.repositories;
 
 import com.example.UberReviewService.models.Booking;
 import com.example.UberReviewService.models.BookingStatus;
+import com.example.UberReviewService.models.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface BookingRepository extends JpaRepository<Booking,Long> {
-    List<Booking> findByBookingStatus(BookingStatus bookingStatus);
+
+    @Query("select r from Booking b inner join Review r where b.id = : bookingId")
+    Review findReviewByBookingId(Long bookingId);
+
 }

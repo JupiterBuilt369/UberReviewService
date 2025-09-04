@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Builder
-@ToString(exclude = {"driver", "passenger", "review"})
+@ToString(exclude = {"driver", "passenger"})
 @NoArgsConstructor
 @AllArgsConstructor
 public class Booking extends BaseModel{
@@ -27,11 +27,7 @@ public class Booking extends BaseModel{
     private Date startTime;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date endTIme;
+    private Date endTime;
 
     private Long totalDistance;
-
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE},fetch = FetchType.LAZY)
-    private Review review;
-
 }
