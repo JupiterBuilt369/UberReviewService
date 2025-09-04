@@ -2,6 +2,7 @@ package com.example.UberReviewService.controllers;
 
 import com.example.UberReviewService.adapter.CreateReviewDtoToReviewAdapter;
 import com.example.UberReviewService.dtos.CreateReviewDto;
+import com.example.UberReviewService.dtos.ReviewDto;
 import com.example.UberReviewService.models.Review;
 import com.example.UberReviewService.services.ReviewService;
 import org.springframework.http.HttpStatus;
@@ -35,8 +36,17 @@ public class ReviewController {
         }
 
         Review review = this.reviewService.addReview(incomingReview);
+        ReviewDto response = ReviewDto.builder()
+                .id(review.getId())
+                .content(review.getContent())
+                .rating(review.getRating())
+                .booking(review.getBooking().getId())
+                .createdAt(review.getCreatedAt())
+                .updatedAt(review.getUpdatedAt())
+                 .build();
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(review);
+                .body(response);
     }
 }
