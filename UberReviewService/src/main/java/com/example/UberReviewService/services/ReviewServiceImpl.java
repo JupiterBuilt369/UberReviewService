@@ -6,6 +6,7 @@ import com.example.UberReviewService.repositories.ReviewRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,16 +66,15 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto updateReviewById(Long id, UpdateReviewDto review) {
-        Review existReview = this.reviewRepository.findReviewById(id);
-        if (existReview == null) {
+        Optional<Review> optionalReview = this.reviewRepository.findById(id);
+        if (optionalReview.isEmpty()) {
             return null;
         }else {
+            Review existReview = optionalReview.get();
             existReview.setRating(review.getRating());
             existReview.setContent(review.getContent());
             reviewRepository.save(existReview);
             return this.reviewAdapter.EntityToReviewDto(existReview);
         }
     }
-
-
 }

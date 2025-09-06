@@ -13,7 +13,7 @@ public class ReviewDto {
     private Long id;
     private String content;
     private Double rating;
-    private Long booking;
+    private Long bookingId;
     private Date createdAt;
     private Date  updatedAt;
 

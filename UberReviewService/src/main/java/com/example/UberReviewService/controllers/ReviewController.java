@@ -69,8 +69,7 @@ public class ReviewController {
             return ResponseEntity.badRequest().body("BAD_REQUEST. No Review found with id " + id);
         }
         else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("No review found with id " + id);
+            return ResponseEntity.ok().body(updated);
         }
     }
 
