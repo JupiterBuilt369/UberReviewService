@@ -23,9 +23,12 @@ public class ReviewServiceImpl implements ReviewService{
 
 
     @Override
-    public Optional<Review> findReviewById(Long id){
-        return reviewRepository.findById(id);
-
+    public ReviewDto findReviewById(Long id){
+        if(reviewRepository.findById(id).isPresent()){
+            Review reviewReceived = this.reviewRepository.findReviewById(id);
+            return this.reviewAdapter.EntityToReviewDto(reviewReceived);
+        }
+        return null;
     }
 
     @Override

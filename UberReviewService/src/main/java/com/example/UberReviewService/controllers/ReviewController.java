@@ -33,4 +33,10 @@ public class ReviewController {
         return ResponseEntity.ok().body(savedReviewDto);
 
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getReviewById(@PathVariable Long id) {
+        ReviewDto review = this.reviewService.findReviewById(id);
+        return ResponseEntity.ok().body(review);
+    }
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface ReviewService {
 
-    public Optional<Review> findReviewById(Long id);
+    public ReviewDto findReviewById(Long id);
 
     public ReviewDto addReview(CreateReviewDto review);
 
