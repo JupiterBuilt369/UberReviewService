@@ -1,5 +1,8 @@
 package com.example.UberReviewService.services;
 
+import com.example.UberReviewService.adapter.ReviewAdapter;
+import com.example.UberReviewService.dtos.CreateReviewDto;
+import com.example.UberReviewService.dtos.ReviewDto;
 import com.example.UberReviewService.models.Review;
 import com.example.UberReviewService.repositories.ReviewRepository;
 import org.springframework.stereotype.Service;
@@ -10,10 +13,12 @@ import java.util.Optional;
 @Service
 public class ReviewServiceImpl implements ReviewService{
 
-    private ReviewRepository reviewRepository;
+    private final ReviewRepository reviewRepository;
+    private final ReviewAdapter reviewAdapter;
 
-    public ReviewServiceImpl(ReviewRepository reviewRepository) {
+    public ReviewServiceImpl(ReviewRepository reviewRepository, ReviewAdapter reviewAdapter) {
         this.reviewRepository = reviewRepository;
+        this.reviewAdapter = reviewAdapter;
     }
 
 
@@ -24,11 +29,15 @@ public class ReviewServiceImpl implements ReviewService{
     }
 
     @Override
-    public Review addReview(Review review) {
-        if (reviewRepository.existsByBookingId(review.getBooking().getId())) {
-            throw new IllegalStateException("Booking already has a review");
+    public ReviewDto addReview(CreateReviewDto reviewDto) {
+
+        Review incomingReview = this.reviewAdapter.ReviewDtoToEntity(reviewDto);
+        if (incomingReview == null) {
+            return null;
         }
-        return reviewRepository.save(review);
+        Review savedReview = reviewRepository.save(incomingReview);
+        return this.reviewAdapter.EntityToReviewDto(savedReview);
+
     }
 
     @Override

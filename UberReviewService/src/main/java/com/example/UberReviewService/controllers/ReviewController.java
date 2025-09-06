@@ -1,52 +1,36 @@
 package com.example.UberReviewService.controllers;
 
-import com.example.UberReviewService.adapter.CreateReviewDtoToReviewAdapter;
+import com.example.UberReviewService.adapter.ReviewAdapter;
 import com.example.UberReviewService.dtos.CreateReviewDto;
 import com.example.UberReviewService.dtos.ReviewDto;
-import com.example.UberReviewService.models.Review;
 import com.example.UberReviewService.services.ReviewService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 
 @RestController
 @RequestMapping("/api/v1/reviews")
 public class ReviewController {
 
     public ReviewService reviewService;
-    public CreateReviewDtoToReviewAdapter createReviewDtoToReviewAdapter;
+    public ReviewAdapter reviewAdapter;
 
-    public ReviewController(ReviewService reviewService, CreateReviewDtoToReviewAdapter createReviewDtoToReviewAdapter) {
+    public ReviewController(ReviewService reviewService, ReviewAdapter reviewAdapter) {
         this.reviewService = reviewService;
-        this.createReviewDtoToReviewAdapter = createReviewDtoToReviewAdapter;
+        this.reviewAdapter = reviewAdapter;
     }
 
     @PostMapping
     public ResponseEntity<?> createReview(@Validated @RequestBody CreateReviewDto reviewRequest  ) {
 
-        Review incomingReview = this.createReviewDtoToReviewAdapter.ConvertDto(reviewRequest);
-        if (incomingReview == null) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body("Invalid arguments passed");
+        ReviewDto savedReviewDto = reviewService.addReview(reviewRequest);
+
+        if (savedReviewDto == null) {
+            return ResponseEntity.badRequest().body("Invalid arguments passed");
         }
 
-        Review review = this.reviewService.addReview(incomingReview);
-        ReviewDto response = ReviewDto.builder()
-                .id(review.getId())
-                .content(review.getContent())
-                .rating(review.getRating())
-                .booking(review.getBooking().getId())
-                .createdAt(review.getCreatedAt())
-                .updatedAt(review.getUpdatedAt())
-                 .build();
+        return ResponseEntity.ok().body(savedReviewDto);
 
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
     }
 }

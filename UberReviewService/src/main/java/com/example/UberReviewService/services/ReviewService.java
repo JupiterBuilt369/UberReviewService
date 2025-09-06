@@ -1,17 +1,18 @@
 package com.example.UberReviewService.services;
 
+import com.example.UberReviewService.dtos.CreateReviewDto;
+import com.example.UberReviewService.dtos.ReviewDto;
 import com.example.UberReviewService.models.Review;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
+
 public interface ReviewService {
 
     public Optional<Review> findReviewById(Long id);
 
-    public Review addReview(Review review);
+    public ReviewDto addReview(CreateReviewDto review);
 
     public List<Review> findAllReview();
 
