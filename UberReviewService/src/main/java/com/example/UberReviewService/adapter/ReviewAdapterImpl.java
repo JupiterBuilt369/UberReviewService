@@ -1,7 +1,7 @@
 package com.example.UberReviewService.adapter;
 
-import com.example.UberReviewService.dtos.CreateReviewDto;
-import com.example.UberReviewService.dtos.ReviewDto;
+import com.example.UberReviewService.dtos.Review.CreateReviewDto;
+import com.example.UberReviewService.dtos.Review.ReviewDto;
 import com.example.UberReviewService.models.Booking;
 import com.example.UberReviewService.models.Review;
 import com.example.UberReviewService.repositories.BookingRepository;
@@ -38,7 +38,7 @@ public class ReviewAdapterImpl implements ReviewAdapter {
                 .id(review.getId())
                 .content(review.getContent())
                 .rating(review.getRating())
-                .booking(review.getBooking() != null ? review.getBooking().getId() : null)
+                .bookingId(review.getBooking() != null ? review.getBooking().getId() : null)
                 .createdAt(review.getCreatedAt())
                 .updatedAt(review.getUpdatedAt())
                 .build();

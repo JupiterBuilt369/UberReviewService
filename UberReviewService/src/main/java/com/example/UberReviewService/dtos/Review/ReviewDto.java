@@ -1,4 +1,4 @@
-package com.example.UberReviewService.dtos;
+package com.example.UberReviewService.dtos.Review;
 
 import lombok.*;
 

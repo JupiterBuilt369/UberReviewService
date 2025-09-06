@@ -1,11 +1,12 @@
-package com.example.UberReviewService.dtos;
+package com.example.UberReviewService.dtos.Review;
 
-
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateReviewDto {
 
     private String content;

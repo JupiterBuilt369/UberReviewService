@@ -1,17 +1,15 @@
 package com.example.UberReviewService.services;
-
 import com.example.UberReviewService.adapter.ReviewAdapter;
-import com.example.UberReviewService.dtos.CreateReviewDto;
-import com.example.UberReviewService.dtos.ReviewDto;
+import com.example.UberReviewService.dtos.Review.*;
 import com.example.UberReviewService.models.Review;
 import com.example.UberReviewService.repositories.ReviewRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final ReviewAdapter reviewAdapter;
@@ -43,18 +41,40 @@ public class ReviewServiceImpl implements ReviewService{
 
     }
 
+
     @Override
-    public List<Review> findAllReview() {
-        return reviewRepository.findAll();
+    public List<ReviewDto> findAllReviews() {
+
+        List<Review> reviewsIncoming = this.reviewRepository.findAll();
+        return reviewsIncoming.stream()
+                .map(review -> this.reviewAdapter.EntityToReviewDto(review))
+                .collect(Collectors.toList());
+
+    }
+
+
+    public boolean deleteReviewById(Long id) {
+        Review review = this.reviewRepository.findReviewById(id);
+        if (review == null) {
+            return false;
+        } else {
+            this.reviewRepository.delete(review);
+            return true;
+        }
     }
 
     @Override
-    public boolean deleteReviewById(Long id) {
-        try {
-            reviewRepository.deleteById(id);
-            return true;
-        } catch (Exception e) {
-            return false;
+    public ReviewDto updateReviewById(Long id, UpdateReviewDto review) {
+        Review existReview = this.reviewRepository.findReviewById(id);
+        if (existReview == null) {
+            return null;
+        }else {
+            existReview.setRating(review.getRating());
+            existReview.setContent(review.getContent());
+            reviewRepository.save(existReview);
+            return this.reviewAdapter.EntityToReviewDto(existReview);
         }
     }
+
+
 }

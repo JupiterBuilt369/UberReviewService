@@ -1,0 +1,13 @@
+package com.example.UberReviewService.dtos.Review;
+
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UpdateReviewDto {
+    private String content;
+    private Double rating;
+}
