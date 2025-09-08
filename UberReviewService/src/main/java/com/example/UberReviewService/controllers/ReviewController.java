@@ -4,7 +4,6 @@ import com.example.UberReviewService.adapter.ReviewAdapter;
 import com.example.UberReviewService.dtos.Review.CreateReviewDto;
 import com.example.UberReviewService.dtos.Review.ReviewDto;
 import com.example.UberReviewService.dtos.Review.UpdateReviewDto;
-import com.example.UberReviewService.models.Review;
 import com.example.UberReviewService.services.ReviewService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -11,7 +11,7 @@ public enum BookingStatus {
     ASSIGNING_DRIVER,
 
     IN_RIDE,
-
+ 
     COMPLETED
 
 }
